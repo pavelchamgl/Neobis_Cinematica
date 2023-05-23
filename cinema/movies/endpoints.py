@@ -1,18 +1,21 @@
 from django.db.models import Subquery
-from rest_framework.generics import ListAPIView
 from datetime import datetime
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Cinemas, Movies, Showtimes
 from .serializers import CinemasSerializers, MoviesSerializers, ShowtimesSerializers
+from users.permissions import IsAdminOrReadOnly
 
 
-class CinemasLislAPIView(ListAPIView):
+class CinemasViewSet(ModelViewSet):
     serializer_class = CinemasSerializers
     queryset = Cinemas.objects.all()
+    permission_classes = [IsAdminOrReadOnly]
 
 
-class MoviesLislAPIView(ListAPIView):
+class MoviesViewSet(ModelViewSet):
     serializer_class = MoviesSerializers
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         current_date = datetime.today().date()
@@ -20,8 +23,9 @@ class MoviesLislAPIView(ListAPIView):
         return movies
 
 
-class ShowtimesLislAPIView(ListAPIView):
+class ShowtimesViewSet(ModelViewSet):
     serializer_class = ShowtimesSerializers
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         current_date = datetime.today()
