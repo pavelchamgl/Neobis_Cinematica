@@ -26,7 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class ClubCard(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     balance = models.IntegerField(default=0)
     discount = models.IntegerField(default=0)
 
