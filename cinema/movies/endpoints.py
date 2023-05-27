@@ -1,15 +1,21 @@
-from django.db.models import Subquery
 from datetime import datetime
 from rest_framework.viewsets import ModelViewSet
+from django.db.models import Subquery
 
-from .models import Cinemas, Movies, Showtimes
-from .serializers import CinemasSerializers, MoviesSerializers, ShowtimesSerializers
+from .models import Cinemas, Movies, Showtimes, MovieFormat
+from .serializers import CinemasSerializers, MovieFormatSerializers, MoviesSerializers, ShowtimesSerializers
 from users.permissions import IsAdminOrReadOnly
 
 
 class CinemasViewSet(ModelViewSet):
     serializer_class = CinemasSerializers
     queryset = Cinemas.objects.all()
+    permission_classes = [IsAdminOrReadOnly]
+
+
+class MovieFormatViewSet(ModelViewSet):
+    serializer_class = MovieFormatSerializers
+    queryset = MovieFormat.objects.all()
     permission_classes = [IsAdminOrReadOnly]
 
 

@@ -1,5 +1,7 @@
 from django.db import models
 
+from rooms.models import Room
+
 
 class Cinemas(models.Model):
     title = models.CharField(max_length=30)
@@ -16,6 +18,18 @@ class Cinemas(models.Model):
     class Meta:
         verbose_name = "Кинотеатор"
         verbose_name_plural = "Кинотеатры"
+
+
+class MovieFormat(models.Model):
+    name = models.CharField(max_length=10)
+    price = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.id} - {self.name} - {self.price}"
+
+    class Meta:
+        verbose_name = "Киноформат"
+        verbose_name_plural = "Киноформаты"
 
 
 class Movies(models.Model):
@@ -43,6 +57,7 @@ class Movies(models.Model):
     age_limit = models.CharField(max_length=4, choices=age_limit_choice, default='5')
     date_start = models.DateField()
     date_end = models.DateField()
+    movie_format = models.ForeignKey(MovieFormat, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.id}: {self.title} - {self.genre} - {self.age_limit}"
@@ -57,6 +72,7 @@ class Showtimes(models.Model):
     end_session = models.TimeField()
     cinema = models.ForeignKey(Cinemas, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    rooms = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.id}: {self.cinema} - {self.movie} | {self.start_session} - {self.end_session}"

@@ -1,15 +1,21 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import Room, Seat
+from .models import RoomType, Room, Seat
+
+
+class RoomTypeSerializer(ModelSerializer):
+    class Meta:
+        model = RoomType
+        fields = ['id', 'name', 'price']
 
 
 class RoomSerializer(ModelSerializer):
     class Meta:
         model = Room
-        fields = ['name', 'showtimes', 'room_type', 'cinemas']
+        fields = ['id', 'name', 'room_type']
 
 
 class SeatSerializer(ModelSerializer):
     class Meta:
         model = Seat
-        fields = ['room', 'seat']
+        fields = ['id', 'room', 'seat']

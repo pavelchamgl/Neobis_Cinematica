@@ -1,8 +1,14 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .serializers import RoomSerializer, SeatSerializer
-from .models import Room, Seat
+from .serializers import RoomTypeSerializer, RoomSerializer, SeatSerializer
+from .models import Room, Seat, RoomType
 from users.permissions import IsAdminOrReadOnly
+
+
+class RoomTypeViewSet(ModelViewSet):
+    serializer_class = RoomTypeSerializer
+    queryset = RoomType.objects.all()
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class RoomViewSet(ModelViewSet):
